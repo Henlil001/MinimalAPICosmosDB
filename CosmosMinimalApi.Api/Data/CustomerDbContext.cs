@@ -8,9 +8,9 @@ namespace CosmosMinimalApi.Api.Data
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseCosmos(
-                "",//URI
-                "",//Primary key
-                "");//Database name
+                Secrets.URI,//URI
+                Secrets.PrimaryKey,//Primary key
+                Secrets.DbName);//Database name
         }
 
         public virtual DbSet<Customer> Customers { get; set; }

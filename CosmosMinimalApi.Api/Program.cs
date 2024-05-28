@@ -12,25 +12,21 @@ namespace CosmosMinimalApi.Api
         {
             var builder = WebApplication.CreateBuilder(args);
 
-            //Detta gör lösningen till minimal api
-            builder.Services.AddEndpointsApiExplorer();
-
+            builder.Services.AddEndpointsApiExplorer();//Detta gör lösningen till minimal api
             builder.Services.AddSwaggerGen();
 
-            builder.Services.AddDbContext<CustomerDbContext>();
+            await builder.AddKeyvaultExtendedAsync();
 
+            builder.Services.AddDbContext<CustomerDbContext>();
             builder.Services.AddScopedExtension();
 
             var app = builder.Build();
 
-
             app.UseSwagger();
             app.UseSwaggerUI();
 
-            //Här lägger jag till mina Endpoints
             var customerService = app.Services.GetRequiredService<ICustomerService>();
             app.AddCustomerEndpoints(customerService);
-
             await app.RunAsync();
         }
     }
