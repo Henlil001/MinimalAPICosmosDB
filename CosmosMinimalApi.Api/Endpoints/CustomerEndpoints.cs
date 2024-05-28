@@ -24,10 +24,10 @@ namespace CosmosMinimalApi.Api.Endpoints
 
             //Ta bort kund
             app.MapDelete("api/customer/delete", async (string id) =>
-            {
-                bool result = await _service.DeleteCustomerAsync(id);
-                return result is true ? Results.Ok("Customer deleted successfully") : Results.BadRequest("Customer do not exist");
-            });
+             {
+                 bool result = await _service.DeleteCustomerAsync(id);
+                 return result is true ? Results.Ok("Customer deleted successfully") : Results.BadRequest("Customer do not exist");
+             });
 
             //Söka på kundens namn
             app.MapGet("api/customer/search", async (string searchVal) =>

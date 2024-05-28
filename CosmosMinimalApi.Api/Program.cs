@@ -15,13 +15,9 @@ namespace CosmosMinimalApi.Api
             //Detta gör lösningen till minimal api
             builder.Services.AddEndpointsApiExplorer();
 
-            builder.Services.AddDbContext<CustomerDbContext>(options =>
-               options.UseCosmos("",//URI
-                                    "",//Primary Key
-                                    ""//DatabaseName
-                                    ));
-
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddDbContext<CustomerDbContext>();
 
             builder.Services.AddScopedExtension();
 
