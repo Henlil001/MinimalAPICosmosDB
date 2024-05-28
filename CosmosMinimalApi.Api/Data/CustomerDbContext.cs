@@ -5,12 +5,9 @@ namespace CosmosMinimalApi.Api.Data
 {
     public class CustomerDbContext : DbContext
     {
-        protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
+        public CustomerDbContext(DbContextOptions options) : base(options)
         {
-            optionsBuilder.UseCosmos(
-                Secrets.URI,//URI
-                Secrets.PrimaryKey,//Primary key
-                Secrets.DbName);//Database name
+            
         }
 
         public virtual DbSet<Customer> Customers { get; set; }
@@ -18,7 +15,7 @@ namespace CosmosMinimalApi.Api.Data
         //Här görs en koppling mellan rätt container och listan
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<Customer>().ToContainer("Customers").HasPartitionKey(s => s.Id);
+            modelBuilder.Entity<Customer>().ToContainer("Customers").HasPartitionKey(s => s.id);
         }
     }
 }

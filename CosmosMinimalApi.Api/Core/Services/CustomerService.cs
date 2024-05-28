@@ -1,5 +1,6 @@
 ﻿using CosmosMinimalApi.Api.Core.Interfaces;
 using CosmosMinimalApi.Api.Data.Interfaces;
+using CosmosMinimalApi.Api.Data.Repos;
 using CosmosMinimalApi.Api.Domain;
 using Microsoft.Azure.Cosmos.Linq;
 
@@ -14,9 +15,11 @@ namespace CosmosMinimalApi.Api.Core.Services
             _customerRepo = customerRepo;
         }
 
+
         public async Task AddNewCustomerAsync(Customer customer)
         {
-           await _customerRepo.AddNewCustomerAsync(customer);
+            customer.id = Guid.NewGuid().ToString();
+            await _customerRepo.AddNewCustomerAsync(customer);
         }
 
         public async Task<bool> DeleteCustomerAsync(string id)
@@ -37,7 +40,7 @@ namespace CosmosMinimalApi.Api.Core.Services
 
         public async Task<bool> UpdateCustomerAsync(Customer updatedCustomer)
         {
-            var selectedCustomer = await _customerRepo.GetCustomerByIdAsync(updatedCustomer.Id);
+            var selectedCustomer = await _customerRepo.GetCustomerByIdAsync(updatedCustomer.id);
             return selectedCustomer != null? await _customerRepo.UpdateCustomerAsync(updatedCustomer, selectedCustomer) : false;
         }
     }

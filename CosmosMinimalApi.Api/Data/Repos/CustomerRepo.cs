@@ -14,7 +14,7 @@ namespace CosmosMinimalApi.Api.Data.Repos
 
         public async Task AddNewCustomerAsync(Customer customer)
         {
-            _context.Customers?.Add(customer);
+            _context.Customers.Add(customer);
             await _context.SaveChangesAsync();
         }
 
@@ -22,7 +22,7 @@ namespace CosmosMinimalApi.Api.Data.Repos
         {
             try
             {
-                _context.Customers?.Remove(customer);
+                _context.Customers.Remove(customer);
                 await _context.SaveChangesAsync();
                 return true;
             }
@@ -35,7 +35,7 @@ namespace CosmosMinimalApi.Api.Data.Repos
 
         public async Task<Customer?> GetCustomerByIdAsync(string id)
         {
-            var customer = await _context.Customers.SingleOrDefaultAsync(c => c.Id == id);
+            var customer = await _context.Customers.SingleOrDefaultAsync(c => c.id == id);
             return customer;
         }
 

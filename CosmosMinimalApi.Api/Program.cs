@@ -17,7 +17,7 @@ namespace CosmosMinimalApi.Api
 
             await builder.AddKeyvaultExtendedAsync();
 
-            builder.Services.AddDbContext<CustomerDbContext>();
+            builder.Services.AddDbContextExtended();
             builder.Services.AddScopedExtension();
 
             var app = builder.Build();
@@ -25,8 +25,10 @@ namespace CosmosMinimalApi.Api
             app.UseSwagger();
             app.UseSwaggerUI();
 
-            var customerService = app.Services.GetRequiredService<ICustomerService>();
-            app.AddCustomerEndpoints(customerService);
+           
+                app.AddCustomerEndpoints();
+           
+
             await app.RunAsync();
         }
     }
