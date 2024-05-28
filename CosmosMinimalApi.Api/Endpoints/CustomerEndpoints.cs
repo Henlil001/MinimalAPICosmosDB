@@ -4,7 +4,7 @@ namespace CosmosMinimalApi.Api.Endpoints
 {
     public static class CustomerEndpoints
     {
-        public static WebApplication AddCustomerEndpointsAsync(this WebApplication app)
+        public static async Task<WebApplication> AddCustomerEndpointsAsync(this WebApplication app)
         {
             //Lägga till kund
             app.MapPost("api/customer/add", (Customer customer) =>
