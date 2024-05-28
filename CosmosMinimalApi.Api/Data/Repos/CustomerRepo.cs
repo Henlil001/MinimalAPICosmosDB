@@ -20,17 +20,9 @@ namespace CosmosMinimalApi.Api.Data.Repos
 
         public async Task<bool> DeleteCustomerAsync(Customer customer)
         {
-            try
-            {
                 _context.Customers.Remove(customer);
                 await _context.SaveChangesAsync();
                 return true;
-            }
-            catch (Exception)
-            {
-                return false;
-                throw;
-            }
         }
 
         public async Task<Customer?> GetCustomerByIdAsync(string id)
@@ -42,7 +34,8 @@ namespace CosmosMinimalApi.Api.Data.Repos
         public async Task<List<Customer>> GetCustomersBySalesPersonNameAsync(string searchVal)
         {
             var customers = await _context.Customers
-                                 .Where(c => c.SalesPersonName.Contains(searchVal))
+                                 .Where(c => c.SalesPersonName.ToLower()
+                                 .Contains(searchVal.ToLower()))
                                  .AsNoTracking().ToListAsync();
             return customers;
         }
@@ -50,24 +43,17 @@ namespace CosmosMinimalApi.Api.Data.Repos
         public async Task<List<Customer>> GetCustomersByNameAsync(string searchVal)
         {
             var customers = await _context.Customers
-                .Where(c => c.Name.Contains(searchVal))
-                .AsNoTracking().ToListAsync();
+                                    .Where(c => c.Name.ToLower()
+                                    .Contains(searchVal.ToLower()))
+                                    .AsNoTracking().ToListAsync();
             return customers;
         }
 
         public async Task<bool> UpdateCustomerAsync(Customer updatedCustomer, Customer customer)
-        {
-            try
-            {
+        { 
                 _context.Entry(customer).CurrentValues.SetValues(updatedCustomer);
                 await _context.SaveChangesAsync();
                 return true;
-            }
-            catch (Exception)
-            {
-                return false;
-                throw;
-            }
         }
     }
 }
