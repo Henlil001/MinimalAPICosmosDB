@@ -10,7 +10,7 @@ namespace CosmosMinimalApi.Api.Data.Repos
             throw new NotImplementedException();
         }
 
-        public Task<bool> DeleteCustomer(string id)
+        public Task<bool> DeleteCustomer(Customer customer)
         {
             throw new NotImplementedException();
         }
