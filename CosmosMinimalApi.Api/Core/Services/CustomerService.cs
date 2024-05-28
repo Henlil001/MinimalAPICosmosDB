@@ -1,33 +1,44 @@
 ﻿using CosmosMinimalApi.Api.Core.Interfaces;
+using CosmosMinimalApi.Api.Data.Interfaces;
 using CosmosMinimalApi.Api.Domain;
+using Microsoft.Azure.Cosmos.Linq;
 
 namespace CosmosMinimalApi.Api.Core.Services
 {
     public class CustomerService : ICustomerService
     {
-        public Task AddNewCustomerAsync(Customer customer)
+        private readonly ICustomerRepo _customerRepo;
+
+        public CustomerService(ICustomerRepo customerRepo)
         {
-            throw new NotImplementedException();
+            _customerRepo = customerRepo;
         }
 
-        public Task<bool> DeleteCustomerAsync(string id)
+        public async Task AddNewCustomerAsync(Customer customer)
         {
-            throw new NotImplementedException();
+           await _customerRepo.AddNewCustomerAsync(customer);
         }
 
-        public Task<List<Customer>> GetCustomersBySalesPersonNameAsync(string searchVal)
+        public async Task<bool> DeleteCustomerAsync(string id)
         {
-            throw new NotImplementedException();
+           var selectedCustumer = await _customerRepo.GetCustomerByIdAsync(id);
+            return selectedCustumer != null? await _customerRepo.DeleteCustomerAsync(selectedCustumer): false; 
         }
 
-        public Task<List<Customer>> GetCustomersByNameAsync(string searchVal)
+        public async Task<List<Customer>> GetCustomersBySalesPersonNameAsync(string searchVal)
         {
-            throw new NotImplementedException();
+            return await _customerRepo.GetCustomersBySalesPersonNameAsync(searchVal);
         }
 
-        public Task<bool> UpdateCustomerAsync(Customer customer)
+        public async Task<List<Customer>> GetCustomersByNameAsync(string searchVal)
         {
-            throw new NotImplementedException();
+           return await _customerRepo.GetCustomersByNameAsync(searchVal);
+        }
+
+        public async Task<bool> UpdateCustomerAsync(Customer updatedCustomer)
+        {
+            var selectedCustomer = await _customerRepo.GetCustomerByIdAsync(updatedCustomer.Id);
+            return selectedCustomer != null? await _customerRepo.UpdateCustomerAsync(updatedCustomer, selectedCustomer) : false;
         }
     }
 }

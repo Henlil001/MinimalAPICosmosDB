@@ -1,38 +1,73 @@
 ﻿using CosmosMinimalApi.Api.Data.Interfaces;
 using CosmosMinimalApi.Api.Domain;
+using Microsoft.EntityFrameworkCore;
 
 namespace CosmosMinimalApi.Api.Data.Repos
 {
     public class CustomerRepo : ICustomerRepo
     {
-        public Task AddNewCustomer(Customer customer)
+        private readonly CustomerDbContext _context;
+        public CustomerRepo(CustomerDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
         }
 
-        public Task<bool> DeleteCustomer(Customer customer)
+        public async Task AddNewCustomerAsync(Customer customer)
         {
-            throw new NotImplementedException();
+            _context.Customers?.Add(customer);
+            await _context.SaveChangesAsync();
         }
 
-        public Task<Customer> GetCustomerById(string id)
+        public async Task<bool> DeleteCustomerAsync(Customer customer)
         {
-            throw new NotImplementedException();
+            try
+            {
+                _context.Customers?.Remove(customer);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+                throw;
+            }
         }
 
-        public Task<List<Customer>> GetCustomersBySalesPersonName(string searchVal)
+        public async Task<Customer?> GetCustomerByIdAsync(string id)
         {
-            throw new NotImplementedException();
+            var customer = await _context.Customers.SingleOrDefaultAsync(c => c.Id == id);
+            return customer;
         }
 
-        public Task<List<Customer>> GetCuustomersByName(string searchVal)
+        public async Task<List<Customer>> GetCustomersBySalesPersonNameAsync(string searchVal)
         {
-            throw new NotImplementedException();
+            var customers = await _context.Customers
+                                 .Where(c => c.SalesPersonName.Contains(searchVal))
+                                 .AsNoTracking().ToListAsync();
+            return customers;
         }
 
-        public Task<bool> UpdateCustomer(Customer customer)
+        public async Task<List<Customer>> GetCustomersByNameAsync(string searchVal)
         {
-            throw new NotImplementedException();
+            var customers = await _context.Customers
+                .Where(c => c.Name.Contains(searchVal))
+                .AsNoTracking().ToListAsync();
+            return customers;
+        }
+
+        public async Task<bool> UpdateCustomerAsync(Customer updatedCustomer, Customer customer)
+        {
+            try
+            {
+                _context.Entry(customer).CurrentValues.SetValues(updatedCustomer);
+                await _context.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+                throw;
+            }
         }
     }
 }

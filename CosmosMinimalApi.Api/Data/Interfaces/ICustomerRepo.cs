@@ -4,11 +4,11 @@ namespace CosmosMinimalApi.Api.Data.Interfaces
 {
     public interface ICustomerRepo
     {
-        Task AddNewCustomer(Customer customer);
-        Task<bool> UpdateCustomer(Customer customer);
-        Task<bool> DeleteCustomer(Customer customer);
-        Task<Customer> GetCustomerById(string id);
-        Task<List<Customer>> GetCuustomersByName(string searchVal);
-        Task<List<Customer>> GetCustomersBySalesPersonName(string searchVal);
+        Task AddNewCustomerAsync(Customer customer);
+        Task<bool> UpdateCustomerAsync(Customer updatedCustomer, Customer customer);
+        Task<bool> DeleteCustomerAsync(Customer customer);
+        Task<Customer?> GetCustomerByIdAsync(string id);
+        Task<List<Customer>> GetCustomersByNameAsync(string searchVal);
+        Task<List<Customer>> GetCustomersBySalesPersonNameAsync(string searchVal);
     }
 }

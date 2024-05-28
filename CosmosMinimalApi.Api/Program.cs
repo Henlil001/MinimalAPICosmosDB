@@ -1,3 +1,4 @@
+using CosmosMinimalApi.Api.Core.Interfaces;
 using CosmosMinimalApi.Api.Data;
 using CosmosMinimalApi.Api.Endpoints;
 using CosmosMinimalApi.Api.ExtensionMethods;
@@ -31,7 +32,8 @@ namespace CosmosMinimalApi.Api
             app.UseSwaggerUI();
 
             //Här lägger jag till mina Endpoints
-            await app.AddCustomerEndpointsAsync();
+            var customerService = app.Services.GetRequiredService<ICustomerService>();
+            app.AddCustomerEndpoints(customerService);
 
             await app.RunAsync();
         }
