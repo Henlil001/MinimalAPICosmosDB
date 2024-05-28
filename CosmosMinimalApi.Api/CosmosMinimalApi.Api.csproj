@@ -13,10 +13,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Endpoints\" />
-    <Folder Include="Core\" />
-    <Folder Include="Data\" />
-    <Folder Include="Domain\" />
+    <Folder Include="Core\Interfaces\" />
+    <Folder Include="Core\Services\" />
+    <Folder Include="Data\Interfaces\" />
+    <Folder Include="Data\Repos\" />
   </ItemGroup>
 
 </Project>
