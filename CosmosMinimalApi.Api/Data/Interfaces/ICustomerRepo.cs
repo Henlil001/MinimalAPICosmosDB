@@ -6,7 +6,7 @@ namespace CosmosMinimalApi.Api.Data.Interfaces
     {
         Task AddNewCustomer(Customer customer);
         Task<bool> UpdateCustomer(Customer customer);
-        Task<bool> DeleteCustomer(Customer customer);
+        Task<bool> DeleteCustomer(string id);
         Task<Customer> GetCustomerById(string id);
         Task<List<Customer>> GetCuustomersByName(string searchVal);
         Task<List<Customer>> GetCustomersBySalesPersonName(string searchVal);

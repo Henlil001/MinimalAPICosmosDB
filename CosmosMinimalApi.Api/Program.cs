@@ -1,4 +1,6 @@
 using CosmosMinimalApi.Api.Data;
+using CosmosMinimalApi.Api.Endpoints;
+using CosmosMinimalApi.Api.ExtensionMethods;
 using Microsoft.EntityFrameworkCore;
 
 namespace CosmosMinimalApi.Api
@@ -18,18 +20,20 @@ namespace CosmosMinimalApi.Api
                                     ""//DatabaseName
                                     ));
 
-           
             builder.Services.AddSwaggerGen();
+
+            builder.Services.AddScopedExtension();
 
             var app = builder.Build();
 
-            
+
             app.UseSwagger();
             app.UseSwaggerUI();
 
-           // lägg in mina endpoints här
+            //Här lägger jag till mina Endpoints
+            await app.AddCustomerEndpointsAsync();
 
-           await app.RunAsync();
+            await app.RunAsync();
         }
     }
 }
