@@ -1,2 +1,2 @@
 # MinimalAPICosmosDB
-Minimal API, Entity Framework, CosmosDB, NoSQL
+Minimal API, Entity Framework, CosmosDB, NoSQL, Azure Functions
